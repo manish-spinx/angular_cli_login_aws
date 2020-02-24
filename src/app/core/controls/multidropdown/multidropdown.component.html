@@ -1,0 +1,12 @@
+  <div class="form-group">
+    <div class="input-wrapper">        
+        <label [for]="id">{{label}}</label>
+        <select class="form-control" [id]="id" [name]="name" multiple (change)="onClickButton($event)">
+            <option value="undefined">{{dropdown_label}}</option>  
+             <option *ngFor="let r of record_list" value="{{r.id}}" [selected]="r.status" >{{r.name}}</option>
+        </select>
+        <small class="text-danger" *ngIf="submit_validaiton_flag && selected_record_list.length<=0">
+            {{label}} Field is Required
+        </small>
+      </div>      
+  </div>

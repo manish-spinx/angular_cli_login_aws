@@ -1,0 +1,259 @@
+<h1>Add New User</h1>
+<!-- #form="ngForm" -->
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" #form="ngForm">  
+    <div class="container">
+
+    <spinx-ckeditor
+        formControlName="ckeditor_info"
+        label="Ck Editor Information"
+        id="ckediotr1"
+        name="ckediotr1">
+    </spinx-ckeditor>
+
+    <app-custom-textbox
+        name="name"
+        id="name"
+        type="text"
+		label="User Name"
+		placeholder="Please enter your user name"
+        minlength="10"
+        maxlength="15"
+        [required]="true"
+        formControlName="name"
+        [submit_validaiton_flag]="submit_validaiton_flag"  
+	    ngModel>
+    </app-custom-textbox>
+
+      
+    <app-custom-textbox
+        name="email"
+        id="email"
+        type="text"
+		label="Email"
+		placeholder="Please enter your Email Address"
+        [required]="true"
+        formControlName="email"    
+        [submit_validaiton_flag]="submit_validaiton_flag"      
+	    ngModel>
+    </app-custom-textbox>
+    
+     <!-- pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"   -->
+
+    <app-custom-textbox
+        name="password"
+        id="password"
+        type="password"
+		label="Password"
+		placeholder="Please enter password"
+		minlength="6"
+        [required]="true"
+        formControlName="password"
+        [submit_validaiton_flag]="submit_validaiton_flag"  
+	    ngModel>
+    </app-custom-textbox> 
+
+
+    <app-custom-textbox
+        name="cnfpassword"
+        id="cnfpassword"
+        type="password"
+		label="Confirm Password"
+		placeholder="Please enter confirm password"		
+        [required]="true"
+        formControlName="cnfpassword"     
+        [submit_validaiton_flag]="submit_validaiton_flag"             
+	    ngModel>
+    </app-custom-textbox>   
+    
+    
+     <app-custom-textbox
+        name="mobile"
+        id="mobile"
+        type="text"
+		label="Mobile"
+		placeholder="Please enter Mobile Number"		
+        [required]="true"
+        formControlName="mobile"
+        [submit_validaiton_flag]="submit_validaiton_flag"  
+	    ngModel>
+    </app-custom-textbox>
+
+    <!-- pattern="^[0-9]*$" -->
+
+    <app-custom-textbox
+        name="company"
+        id="company"
+        type="text"
+		label="Company Name"
+		placeholder="Please enter company name"		
+        [required]="true"
+        formControlName="company"
+        [submit_validaiton_flag]="submit_validaiton_flag"
+	    ngModel>
+    </app-custom-textbox> 
+
+    <spinx-checkbox
+            label="Education List"
+            [record_list]="education_list"
+            [selected_record_list]="eduFormArray"
+            formArrayName="edu_data"
+            (change)="get_checkbox_value($event)"
+            [submit_validaiton_flag]="submit_validaiton_flag"
+            name="education_name"
+    ></spinx-checkbox>
+
+
+    <spinx-radio 
+        label="Gender"
+        id="gender"
+        [genders_custom]="genders" 
+        formControlName="gender" 
+        [required]="true"  
+        name="gender"
+        [submit_validaiton_flag]="submit_validaiton_flag" 
+        ngModel>
+    </spinx-radio> 
+        
+    <spinx-textarea
+        rows="5"
+        placeholder="Enter Your Address .."
+        formControlName="address" 
+        id="address"
+        label="Address"
+        >
+    </spinx-textarea>
+
+
+    <spinx-singlefile
+    id="file-input-spinx"
+    name="file-input-spinx"
+    [selected_record_list]="totalfiles"
+    (change)="handleFileInput($event)"
+    label="User Profile"
+    formArrayName="user_profile_data"
+    [submit_validaiton_flag]="submit_validaiton_flag"
+    [image_valdaiton]="image_valdaiton"
+>
+    </spinx-singlefile>
+
+
+    <spinx-dropdown
+    id="country"
+    label="Country"
+    name="country"
+    [record_list]="country_list"
+    formControlName="country"
+    [required]="true"  
+    [submit_validaiton_flag]="submit_validaiton_flag"
+    (change)="onChange_country_selection($event.target.value)"
+>
+</spinx-dropdown>
+
+    <spinx-multidropdown    
+        label="Team"
+        name="team_name"
+        id="team_name"
+        formArrayName="team_data"
+        [record_list]="team_list"
+        [selected_record_list]="team_dataFormArray"
+        dropdown_label="Select Team List"
+        (change)="onChange_team_selection($event)"
+        [submit_validaiton_flag]="submit_validaiton_flag"
+    > 
+    </spinx-multidropdown>
+
+    <spinx-date-picker  
+        placeholder="Enter The First Date"  
+        formControlName="dateofjoin" 
+        format="YYYY/MM/DD HH:mm:ss"
+    >
+    </spinx-date-picker> 
+
+   
+
+    <!-- <dp-date-picker formControlName="dateofjoin" [config]="datePickerConfig"></dp-date-picker> -->
+
+    <!-- <spinx-datepicker     
+    (change)="onChange_country_selection($event.target.value)"
+    formControlName="dateofjoin"
+    ngModel
+    >
+</spinx-datepicker> -->
+        
+<!-- <div class="form-group">
+	<div class="input-wrapper" [class.required]="required">
+    <label for="datepicker">Date Of Joining</label>
+
+    <input [owlDateTimeTrigger]="dt1" 
+            class="form-control" 
+            name="datepicker"
+            id="datepicker"
+            [owlDateTime]="dt1" 
+            placeholder="Enter ...."
+            formControlName="dateofjoin"
+            />
+    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time> 
+      
+	  </div>
+  </div> -->
+         
+
+     <!-- <div class="form-group row">
+         <label class="col-md-3 col-form-label" for="file-input">File input</label>
+         <div class="col-md-9">
+           <input type="file" id="file-input" name="file-input" (change)="handleFileInput($event)">
+         </div>
+         <small class="text-danger" *ngIf="custom_image_valdaiton!=''">
+             {{custom_image_valdaiton}}
+           </small> 
+       </div> -->
+
+
+
+<!-- <div *ngFor="let item of education_list;let i=index">
+ <input type="checkbox" (change)="get_checkbox_value($event)" formArrayName="edu_data" id={{item.id}} name="education"> {{item.name}}<br>
+</div> -->
+
+       
+        
+   <!-- <spinx-textbox id="Name" [(model)]="Name" name="Name" 
+    label="Name" maxlength="10" manish_address="registerForm.controls.Name" placeholder="Please Enter Name" (modelChange)="get_data($event)"></spinx-textbox> -->
+
+    <!-- <div class="alert alert-danger" *ngIf="isSubmitted_message && registerForm.controls.Name.errors">
+        <div *ngIf="registerForm.hasError('required','Name')">Please enter email.</div>
+    </div>  -->
+
+    <!-- <spinx-textbox id="emailAddress" [(model)]="emailAddress" label="Email address" placeholder="We'll never share your email with anyone else."></spinx-textbox> -->
+
+    <!-- <spinx-textarea [(inputModel)]="data1" [maxLength]="0"></spinx-textarea>    
+    <spinx-textarea [(inputModel)]="data2" [maxLength]="15" [isNumeric]="true" ></spinx-textarea>
+ 
+    manish_address="registerForm" 
+-->
+
+      
+    <!-- [disabled]="true" -->
+
+    <!-- disabled="false" -->
+
+    <br/>
+    <br/>
+
+    <spinx-button label="Add User" class_custom="btn btn-primary" id="submit_button" (onClick)="onSubmit()" ></spinx-button>     
+      &nbsp;&nbsp;&nbsp;     
+    <spinx-button label="Cancel" class_custom="btn btn-secondary" id="cancel_button" (onClick)="onCancel()" ></spinx-button>
+
+    </div>
+    
+
+         <!-- <button class="btn btn-primary"  >Add User</button> -->
+
+   
+
+</form>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<!-- [disabled]="registerForm.invalid" -->

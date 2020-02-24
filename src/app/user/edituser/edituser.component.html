@@ -1,0 +1,193 @@
+<h1>Edit User</h1>
+<!-- #form="ngForm" -->
+<form [formGroup]="registerForm" #form="ngForm">  
+    <div class="container">
+<!-- 
+        <ckeditor 
+        name="myckeditor"
+        required
+        [config]="ckeConfig" 
+        debounce="500" 
+        (paste)="onPaste_ckeditor($event)"
+        (change)="onChange_ckeditor($event)">
+        </ckeditor> -->
+
+        <spinx-ckeditor
+        formControlName="ckeditor_info"
+        label="Ck Editor Information"
+        id="ckediotr1"
+        name="ckediotr1">
+    </spinx-ckeditor>
+
+    <app-custom-textbox
+        name="name"
+        id="name"
+        type="text"
+		label="User Name"
+		placeholder="Please enter your user name"
+        minlength="10"
+        maxlength="15"
+        [required]="true"
+        formControlName="name"
+        [submit_validaiton_flag]="submit_validaiton_flag"  
+	    ngModel>
+    </app-custom-textbox>
+      
+    <app-custom-textbox
+        name="email"
+        id="email"
+        type="text"
+		label="Email"
+		placeholder="Please enter your Email Address"
+        [required]="true"
+        formControlName="email"    
+        [submit_validaiton_flag]="submit_validaiton_flag"      
+	    ngModel>
+    </app-custom-textbox>
+    
+     <!-- pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"   -->
+
+     <app-custom-textbox
+        name="mobile"
+        id="mobile"
+        type="text"
+		label="Mobile"
+		placeholder="Please enter Mobile Number"		
+        [required]="true"
+        formControlName="mobile"
+        [submit_validaiton_flag]="submit_validaiton_flag"  
+	    ngModel>
+    </app-custom-textbox>
+
+    <!-- pattern="^[0-9]*$" -->
+
+    <app-custom-textbox
+        name="company"
+        id="company"
+        type="text"
+		label="Company Name"
+		placeholder="Please enter company name"		
+        [required]="true"
+        formControlName="company"
+        [submit_validaiton_flag]="submit_validaiton_flag"
+	    ngModel>
+    </app-custom-textbox> 
+
+    <spinx-checkbox
+            label="Education List"
+            [record_list]="education_list"
+            [selected_record_list]="eduFormArray"
+            formArrayName="edu_data"
+            (change)="get_checkbox_value($event)"
+            [submit_validaiton_flag]="submit_validaiton_flag"
+            name="education_name"
+    ></spinx-checkbox>
+
+
+    <spinx-radio 
+        label="Gender"
+        id="gender"
+        [genders_custom]="genders" 
+        formControlName="gender" 
+        [required]="true"  
+        name="gender"
+        [submit_validaiton_flag]="submit_validaiton_flag" 
+        ngModel>
+    </spinx-radio> 
+        
+    <spinx-textarea
+        rows="5"
+        placeholder="Enter Your Address .."
+        formControlName="address" 
+        id="address"
+        label="Address"
+        >
+    </spinx-textarea>
+
+
+    <spinx-singlefile
+    id="file-input-spinx"
+    name="file-input-spinx"
+    [selected_record_list]="totalfiles"
+    (change)="handleFileInput($event)"
+    label="User Profile"
+    formArrayName="user_profile_data"
+    [submit_validaiton_flag]="submit_validaiton_flag"
+    [image_valdaiton]="image_valdaiton"
+    [edit_pic_link]="edit_from_profile_link"
+>
+    </spinx-singlefile>
+
+    <spinx-dropdown
+    id="country"
+    label="Country"
+    name="country"
+    [record_list]="country_list"
+    formControlName="country"
+    [required]="true"  
+    [submit_validaiton_flag]="submit_validaiton_flag"
+    (change)="onChange_country_selection($event.target.value)"
+>
+</spinx-dropdown>
+
+    <spinx-multidropdown    
+        label="Team"
+        name="team_name"
+        id="team_name"
+        formArrayName="team_data"
+        [record_list]="team_list"
+        [selected_record_list]="team_dataFormArray"
+        dropdown_label="Select Team List"
+        (change)="onChange_team_selection($event)"
+        [submit_validaiton_flag]="submit_validaiton_flag"
+    > 
+    </spinx-multidropdown>
+
+
+
+       <!-- <spinx-date-picker  
+        placeholder="Enter The First Date"  
+        formControlName="dateofjoin" 
+        id="dateofjoin"
+        name="dateofjoin"
+        value="temp_date"
+    >
+    </spinx-date-picker>    -->
+
+      <!-- <app-custom-datepicker
+        name="dateofjoin"
+        id="dateofjoin"
+		label="date picker testing"
+        [required]="false"
+        formControlName="dateofjoin"
+        [submit_validaiton_flag]="submit_validaiton_flag"
+	    ngModel>
+    </app-custom-datepicker>  -->
+
+        <mat-form-field>
+        <input matInput id="dateofjoin" formControlName="dateofjoin" [matDatepicker]="picker"
+               (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>     
+
+
+    <!-- <ng-datepicker formControlName="dateofjoin" format="YYYY/MM/DD HH:mm:ss"></ng-datepicker> -->
+
+    <br/>
+    <br/>
+
+    <spinx-button label="Update User" class_custom="btn btn-primary" id="submit_button" (onClick)="onSubmit()" ></spinx-button>     
+      &nbsp;&nbsp;&nbsp;     
+    <spinx-button label="Cancel" class_custom="btn btn-secondary" id="cancel_button" (onClick)="onCancel()" ></spinx-button>
+
+    </div>
+    
+   
+
+</form>
+
+<br/>
+<br/>
+<br/>
+<br/>

@@ -1,0 +1,23 @@
+<div>
+    <label [for]="id">{{label}}</label>    
+    <div *ngFor="let g of genders_custom;let i = index">
+        <label>
+             <input 
+                type="radio" 
+                (submit_validaiton_flag)="submit_validaiton_flag"
+                [name]="name" 
+                [id]="g.id" 
+                [(ngModel)]='data' 
+                [ngModelOptions]="{standalone: true}" 
+                [value]="g.value"
+                (input)="onChange()"
+		        (change)="onChange()"
+		        (blur)="onTouchedFn()"
+                >{{g.display}}
+        </label>
+    </div>
+
+    <small class="text-danger" *ngIf="(showError || submit_validaiton_flag)">
+        {{errors[0]}}
+	  </small>
+</div>

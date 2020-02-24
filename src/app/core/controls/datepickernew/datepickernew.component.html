@@ -1,0 +1,20 @@
+<div class="form-group">
+	<mat-form-field>
+        <input 
+            matInput
+            [matDatepicker]="picker" 
+            (submit_validaiton_flag)="submit_validaiton_flag"
+            [id]="id"
+            [pattern]="pattern"
+            [required]="required"
+            [disabled]="disabled"            
+            [(ngModel)]="data"
+            [ngModelOptions]="{standalone: true}"
+            (input)="onChange()"
+            (change)="onChange()"
+            (blur)="onTouchedFn()"/>
+        
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>

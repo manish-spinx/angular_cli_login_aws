@@ -1,0 +1,152 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+         
+           <div class="card-header">
+            <div class="mb-4">
+              <i class="fa fa-align-justify"></i>
+            <a  routerLink="/user/add" class="btn btn-success" style="float: right;" title="Add User"><i
+                class="fa fa-plus"></i><span> Add User</span></a> 
+            </div>
+            <form class="form-horizontal filter-form" name="filterForm" (submit)="filterData()">
+              <div class="form-group row">
+                <div class="form-wrapper col-md-2">
+                  <label class="col-form-label">Name</label>
+                  <div class="form-input">
+                    <input type="text" class="form-control" name="name" [(ngModel)]="params.name" autocomplete="off"
+                      maxlength="15">
+                  </div>
+                </div>
+                
+                <div class="form-wrapper col-md-2">
+                  <label class="col-form-label">Email</label>
+                  <div class="form-input">
+                    <input type="text" class="form-control" name="email" [(ngModel)]="params.email">
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="row form-group">
+                <div class="user-buttons float-right text-right col-md-12">
+                  <button class="btn btn-primary mt-0 mr-2" type="submit" name="filter">Filter</button>
+                  <button class="btn btn-danger mt-0" [disabled]="objectKeys(params).length < 1 && !isFilter" (click)="resetFilter()"
+                    name="clear">Clear</button>
+                </div>
+              </div>
+
+            </form>
+          </div> 
+
+          <div class="card-body">
+                <div class="entry-select mb-4">
+                  <span>Show</span>
+                  <select [(ngModel)]="limit" (change)="sorting()">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="25">25</option>
+                    <option [ngValue]="50">50</option>
+                    <option [ngValue]="100">100</option>
+                  </select>
+                  <span>entries</span>
+                </div>
+
+                <div class="entry-select mb-4">
+                  <span>Bulk Action : </span>
+                  <select [(ngModel)]="bulk_type" name="bulk_type">
+                    <option [ngValue]="0">Please Select</option>
+                    <option [ngValue]="1">All User Active</option>
+                    <option [ngValue]="2">All User Inactive</option>
+                    <option [ngValue]="3">Delete All User</option>
+                  </select>&nbsp;&nbsp;&nbsp;
+                  <button class="btn btn-primary mt-0 mr-2" type="button" (click)="bulk_action_apply()">Submit</button>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-striped user">
+                    <thead>
+                     
+                      <tr>
+                        <th>
+                          <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();"/>
+                        </th>                         
+                        <th class="cre-name">
+                          <div (click)="headerSort('name',order_type)">
+                            <span class="col-header">Name</span>
+                            <span *ngIf="sort_field != 'name'" class="both-arrow"></span>
+                            <span *ngIf="order_type == 'desc' && sort_field=='name'" class="up-arrow"></span>
+                            <span *ngIf="order_type == 'asc' &&sort_field=='name'" class="down-arrow"></span>
+                          </div>
+                        </th>
+
+                        <th class="cre-name">
+                            <div (click)="headerSort('email',order_type)">
+                              <span class="col-header">Email</span>
+                              <span *ngIf="sort_field != 'email'" class="both-arrow"></span>
+                              <span *ngIf="order_type == 'desc' && sort_field=='email'" class="up-arrow"></span>
+                              <span *ngIf="order_type == 'asc' &&sort_field=='email'" class="down-arrow"></span>
+                            </div>
+                          </th>
+
+                        <th>
+                          <div (click)="headerSort('created_at',order_type)">
+                            <span class="col-header">Created Date</span>
+                            <span *ngIf="sort_field != 'created_at'" class="both-arrow"></span>
+                            <span *ngIf="order_type == 'desc' && sort_field=='created_at'" class="up-arrow"></span>
+                            <span *ngIf="order_type == 'asc' &&sort_field=='created_at'" class="down-arrow"></span>
+                          </div>
+                        </th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="user_recordList.length">
+                      <tr *ngFor="let user_data of user_recordList;let i=index">
+                        <td class="cre-name"><input type="checkbox" [(ngModel)]="user_data.selected" (change)="checkIfAllSelected_new(user_data._id,$event);"></td>
+                        <td class="cre-name">{{user_data.name}}</td>
+                        <td class="cre-name">{{user_data.email}}</td>
+                        <td class="cre-name">{{user_data.created_at | date :'dd-MM-yyyy'}}</td>
+                        <td>
+                         
+                          <mat-slide-toggle
+                          [(ngModel)]="user_data.displayStatus"
+                          class="example-margin"
+                          (change)="updateStatus(user_data.status, user_data._id, i, user_data.displayStatus)
+
+                          ">
+                        </mat-slide-toggle>
+
+
+                        </td>
+                        <td>
+                          <a class="btn btn-sm btn-success mr-1" tooltip="Edit" placement="bottom" routerLink="/user/edit/{{user_data._id}}"><i class="icon-pencil"></i> Edit</a>
+                          <button class="btn btn-sm btn-danger mr-1" tooltip="Delete" placement="bottom" (click)="delete_user(user_data._id)"><i
+                              class="icon-trash"></i> Delete</button>                          
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="!user_recordList.length">
+                        <tr>
+                            <td colspan="7" class="text-center">No records found</td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+              <div class="show-entries mb-3 float-left">
+                <span>Showing {{user_recordList.length == 0 ? 0 :currentPage*limit- limit+1}} to
+                  {{limit*currentPage > totalItem ? totalItem : limit*currentPage }} of {{totalItem}} entries</span>
+              </div>
+              <div class="table-pagination float-right">
+                 
+                <pagination [boundaryLinks]="true" [itemsPerPage]="limit" [totalItems]="totalItem" (pageChanged)="pageChanged($event)"
+                  [(ngModel)]="currentPage" [maxSize]="5" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                  lastText="&raquo;" (numPages)="smallnumPages = $event"></pagination>
+              </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  

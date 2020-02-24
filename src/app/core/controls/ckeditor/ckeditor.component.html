@@ -1,0 +1,26 @@
+<div class="form-group">
+	<div class="input-wrapper">
+    <label [for]="id">{{ label }}</label>
+		 <!-- <ckeditor 
+            formControlName="ckeditor_info"
+            name="myckeditor"
+            required
+            [config]="ckeConfig" 
+            debounce="500" 
+            (paste)="onPaste_ckeditor($event)"
+            (change)="onChange_ckeditor($event)">
+        </ckeditor> -->
+        <ckeditor 
+            [name]="name"
+            [id]="id"
+            [(ngModel)]="data"
+		    [ngModelOptions]="{standalone: true}"
+            [config]="ckeConfig" 
+            debounce="500" 
+            (input)="onChange()"
+            (change)="onChange()"
+            (blur)="onTouchedFn()"
+            >
+        </ckeditor>
+	  </div>
+  </div>

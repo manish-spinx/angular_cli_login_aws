@@ -1,0 +1,41 @@
+<!-- <div class="form-group row">
+    <label class="col-md-3 col-form-label" [for]="id">{{label}}</label>
+    <div class="col-md-9">
+      <input type="file" [id]="id" [name]="name" (change)="onClickButton($event)">
+    </div>
+     
+    <small class="text-danger" *ngIf="submit_validaiton_flag && selected_record_list.length<=0">
+        {{label}} Field is Required
+    </small>
+
+     <small class="text-danger" *ngIf="selected_record_list.length>=0 && image_valdaiton">
+        {{label}} File Is Not Allowed        
+      </small>  
+  </div> -->
+
+
+  <div class="form-group">
+    <label class="col-form-label" [for]="id">{{label}}</label>
+    <div>
+      <input type="file" [id]="id" [name]="name" (change)="onClickButton($event)">
+
+        <span *ngIf="edit_pic_link!=''">
+          <button (click)="openModal('custom-modal')">{{label}} Pic</button>
+        </span>
+
+    </div>
+     
+    <small class="text-danger" *ngIf="submit_validaiton_flag && selected_record_list.length<=0 && image_valdaiton==false">
+        {{label}} Field is Required
+    </small>
+
+     <small class="text-danger" *ngIf="selected_record_list.length<=0 && image_valdaiton">
+        {{label}} File Is Not Allowed        
+      </small>  
+  </div>
+
+  <jw-modal id="custom-modal">
+    <img src="{{edit_pic_link}}" />
+    <button (click)="closeModal('custom-modal');">Close</button>
+</jw-modal>
+  

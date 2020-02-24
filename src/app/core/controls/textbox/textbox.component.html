@@ -1,0 +1,25 @@
+<div class="form-group">
+    <label [for]="id">{{ label }}</label>
+    <input 
+    type="text" 
+    #control 
+    class="form-control" 
+    [id]="id" 
+    [name]="name" 
+    [(ngModel)]="model" 
+    (ngModelChange)="modelChange.emit($event)" 
+    [placeholder]="placeholder" 
+    ngControl="model" />
+
+       
+        <!-- <div class="alert alert-danger" *ngIf="manish_address.controls.name.errors">
+        <span *ngIf="manish_address.hasError('required','name')">Please enter email.</span>
+      </div>
+    
+      [manish_address]="manish_address"
+    -->
+      
+      <small class="text-danger" *ngIf="anyError()">
+        {{ getErrorMessage() }}
+      </small>
+  </div>
